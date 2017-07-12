@@ -6,52 +6,37 @@
 <form action="/" method="post">
   <label for="name">Podcast Name</label>
   <input id="name" name="name" type="text">
-  <label for="genre">Genre</label>
-  <input id="genre" name="genre" type="text">
+  <label for="podcastGenre">Select A Genre</label>
+  <select id='podcastGenre' name='podcastGenre' type='text'>
+      <option value="Storytelling">Storytelling</option>
+      <option value="Education">Education</option>
+      <option>News</option>
+      <option>Scripted Series</option>
+      <option>Interviews</option>
+      <option>Comedies</option>
+      <option>Editorials</option>
+      <option>Other</option>
+    </select>
   <label for="description">Description</label>
   <input id="description" name="description" type="text">
   <button type="submit" class="btn btn-success">Add This Podcast</button>
 </form>
+
 <br>
 <h2>Existing Podcasts:</h2>
-
 #if($podcasts)
   <p>Click on a podcast to see its reviews:</p>
   <ul>
     #foreach ($podcast in $podcasts)
-      <li><a href="/podcast/$podcast.getId()">$podcast.getName()
-        -  $podcast.getGenre()</a>
-         <br>
+      <li><a href="/podcast/$podcast.getId()">$podcast.getName()</a>
+        <br>
+        $podcast.getGenre()
+        <br>
         $podcast.getDescription()</a></li>
     #end
   </ul>
 #else
   <p>No podcasts yet!</p>
 #end
-<br>
-<h2>New Review:</h2>
-
-<form action="/" method="post">
-  <label for="podcastId">Select a Podcast</label>
-  <select id='podcastId' name='podcastId' type='text'>
-    #foreach($podcast in $podcasts)
-      <option value="$podcast.getId()">$podcast.getName()</option>
-    #end
-  </select>
-  <div class="form-group">
-    <label for="review-rating">Rate this podcast 1-5</label>
-    <input id="review-rating" name="review-rating" type="text" class="form-control">
-  </div>
-  <div class="form-group">
-    <label for="review-title">Review Title</label>
-    <input id="review-title" name="review-title" type="text" class="form-control">
-  </div>
-  <div class="form-group">
-    <label for="review-description">Write your review</label>
-    <input id="review-description" name="review-description" type="text" class="form-control">
-  </div>
-
-  <button type="submit" class="btn btn-success">Publish Review</button>
-</form>
 
 <!--index.vtl-->
