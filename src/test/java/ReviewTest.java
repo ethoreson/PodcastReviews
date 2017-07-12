@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.Arrays;
 
 public class ReviewTest {
 
@@ -23,25 +24,21 @@ public class ReviewTest {
 
   @Test
   public void Review_instantiatesCorrectly_true() {
-
     assertEquals(true, myReview instanceof Review);
   }
 
   @Test
   public void getTitle_retrievesReviewsTitle_true() {
-    // Review myReview = new Review("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals("I loved it!", myReview.getTitle());
   }
 
   @Test
   public void getGenre_retrievesReviewsRating_true() {
-    // Review myReview = new Review("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals(5, myReview.getRating());
   }
 
   @Test
   public void getDescription_retrievesReviewsDescription_true() {
-    // Review myReview = new Review("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals("I was hooked from the beginning", myReview.getDescription());
   }
 
@@ -54,7 +51,6 @@ public class ReviewTest {
 
   @Test
   public void save_returnsTrueIfDescriptionsAretheSame() {
-    // Review myReview = new Review("Storyville", "Storytelling", "A diverse collection of short stories");
     myReview.save();
     assertTrue(Review.all().get(0).equals(myReview));
   }

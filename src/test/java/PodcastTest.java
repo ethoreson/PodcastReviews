@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.Arrays;
 
 public class PodcastTest {
 
@@ -29,19 +30,16 @@ public class PodcastTest {
 
   @Test
   public void getName_retrievesPodcastsName_true() {
-    // Podcast myPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals("Storyville", myPodcast.getName());
   }
 
   @Test
   public void getGenre_retrievesPodcastsGenre_true() {
-    // Podcast myPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals("Storytelling", myPodcast.getGenre());
   }
 
   @Test
   public void getDescription_retrievesPodcastsDescription_true() {
-    // Podcast myPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
     assertEquals("A diverse collection of short stories", myPodcast.getDescription());
   }
 
@@ -54,7 +52,6 @@ public class PodcastTest {
 
   @Test
   public void save_returnsTrueIfDescriptionsAretheSame() {
-    // Podcast myPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
     myPodcast.save();
     assertTrue(Podcast.all().get(0).equals(myPodcast));
   }
@@ -91,6 +88,16 @@ public class PodcastTest {
     Podcast secondPodcast = new Podcast("RadioLab", "News", "A science podcast");
     secondPodcast.save();
     assertEquals(Podcast.find(secondPodcast.getId()), secondPodcast);
+  }
+
+  @Test
+  public void getReviews_retrievesALlReviewsFromDatabase_reviewsList() {
+    Review firstReview = new Review("I loved it!", 5, "I love the host!", myPodcast.getId());
+    firstReview.save();
+    Review secondReview = new Review("It was okay", 3, "I didn't understand some of it", myPodcast.getId());
+    secondReview.save();
+    Review[] reviews = new Review[] { firstReview, secondReview };
+    assertTrue(myPodcast.getReviews().containsAll(Arrays.asList(reviews)));
   }
 
 }

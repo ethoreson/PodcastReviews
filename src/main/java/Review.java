@@ -50,7 +50,9 @@ public class Review {
       return false;
     } else {
       Review newReview = (Review) otherReview;
-      return this.getTitle().equals(newReview.getTitle()) && this.getId() == newReview.getId();
+      return this.getTitle().equals(newReview.getTitle()) &&
+      this.getId() == newReview.getId() &&
+      this.getPodcastId() == newReview.getPodcastId();
     }
   }
 

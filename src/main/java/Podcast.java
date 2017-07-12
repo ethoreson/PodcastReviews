@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class Podcast {
 
@@ -67,6 +68,15 @@ public class Podcast {
         .addParameter("id", id)
         .executeAndFetchFirst(Podcast.class);
       return podcast;
+    }
+  }
+
+  public List<Review> getReviews() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE podcast_id=:id";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Review.class);
     }
   }
 
