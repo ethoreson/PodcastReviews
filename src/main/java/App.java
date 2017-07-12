@@ -27,9 +27,28 @@ public class App {
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 
-  get("/podcast/:id", (request, response) -> {
+  get("/:id", (request, response) -> {
     Map<String, Object> model = new HashMap<String, Object>();
-    model.put("podcasts", "templates/podcast.vtl");
+    Podcast podcast = Podcast.find(Integer.parseInt(request.params(":id")));
+    model.put("podcast", podcast);
+    model.put("reviews", podcast.getReviews());
+    model.put("template", "templates/podcast.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
+  post("/:id", (request, response) -> {
+    Map<String, Object> model = new HashMap<String, Object>();
+    Podcast podcast = Podcast.find(Integer.parseInt(request.params(":id")));
+    int podcastId = podcast.getId();
+    String title = request.queryParams("title");
+    int rating = Integer.parseInt(request.queryParams("reviewRating"));
+    String description = request.queryParams("description");
+    Review newReview = new Review(title, rating, description, podcastId);
+    newReview.save();
+    model.put("podcast", podcast);
+    model.put("template", "templates/podcast.vtl");
+    String url = String.format("/%d", podcastId);
+    response.redirect(url);
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 

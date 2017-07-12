@@ -10,12 +10,12 @@
   <select id='podcastGenre' name='podcastGenre' type='text'>
       <option value="Storytelling">Storytelling</option>
       <option value="Education">Education</option>
-      <option>News</option>
-      <option>Scripted Series</option>
-      <option>Interviews</option>
-      <option>Comedies</option>
-      <option>Editorials</option>
-      <option>Other</option>
+      <option value="News">News</option>
+      <option value="Scripted Series">Scripted Series</option>
+      <option value="Interviews">Interviews</option>
+      <option value="Comedies">Comedies</option>
+      <option value="Editorials">Editorials</option>
+      <option value="Other">Other</option>
     </select>
   <label for="description">Description</label>
   <input id="description" name="description" type="text">
@@ -28,7 +28,7 @@
   <p>Click on a podcast to see its reviews:</p>
   <ul>
     #foreach ($podcast in $podcasts)
-      <li><a href="/podcast/$podcast.getId()">$podcast.getName()</a>
+      <li><a href="/$podcast.getId()">$podcast.getName()</a>
         <br>
         $podcast.getGenre()
         <br>

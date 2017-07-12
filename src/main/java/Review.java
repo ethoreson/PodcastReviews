@@ -38,7 +38,7 @@ public class Review {
   }
 
   public static List<Review> all() {
-    String sql = "SELECT id, title, rating, description, podcast_id FROM reviews";
+    String sql = "SELECT id, title, rating, description, podcast_Id FROM reviews";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Review.class);
     }
@@ -78,6 +78,15 @@ public class Review {
       return review;
     }
   }
+
+  // public List<Review> getReviews() {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM reviews WHERE podcast_id=:id";
+  //     return con.createQuery(sql)
+  //       .addParameter("id", this.id)
+  //       .executeAndFetch(Review.class);
+  //   }
+  // }
 
 
 }
