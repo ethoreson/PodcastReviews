@@ -48,4 +48,45 @@ public class PodcastTest {
     assertTrue(firstPodcast.equals(secondPodcast));
   }
 
+  @Test
+  public void save_returnsTrueIfDescriptionsAretheSame() {
+    Podcast myPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
+    myPodcast.save();
+    assertTrue(Podcast.all().get(0).equals(myPodcast));
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfPodcast_true() {
+    Podcast firstPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
+    firstPodcast.save();
+    Podcast secondPodcast = new Podcast("RadioLab", "News", "A science podcast");
+    secondPodcast.save();
+    assertEquals(true, Podcast.all().get(0).equals(firstPodcast));
+    assertEquals(true, Podcast.all().get(1).equals(secondPodcast));
+  }
+
+  @Test
+  public void save_assignsIdToObject() {
+    Podcast myPodcast = new Podcast("RadioLab", "News", "A science podcast");
+    myPodcast.save();
+    Podcast savedPodcast = Podcast.all().get(0);
+    assertEquals(myPodcast.getId(), savedPodcast.getId());
+  }
+
+  @Test
+  public void getId_PodcastsInstantiateWithAnID() {
+    Podcast myPodcast = new Podcast("RadioLab", "News", "A science podcast");
+    myPodcast.save();
+    assertTrue(myPodcast.getId() > 0);
+  }
+
+  @Test
+  public void find_returnsPodcastWithSameId_secondPodcast() {
+    Podcast firstPodcast = new Podcast("Storyville", "Storytelling", "A diverse collection of short stories");
+    firstPodcast.save();
+    Podcast secondPodcast = new Podcast("RadioLab", "News", "A science podcast");
+    secondPodcast.save();
+    assertEquals(Podcast.find(secondPodcast.getId()), secondPodcast);
+  }
+
 }

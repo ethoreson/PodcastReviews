@@ -32,7 +32,7 @@ public class Podcast {
   }
 
   public static List<Podcast> all() {
-    String sql = "SELECT id, name, genre, description FROM podasts";
+    String sql = "SELECT id, name, genre, description FROM podcasts";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Podcast.class);
     }
@@ -44,12 +44,31 @@ public class Podcast {
       return false;
     } else {
       Podcast newPodcast = (Podcast) otherPodcast;
-      return this.getDescription().equals(newPodcast.getDescription());
+      return this.getName().equals(newPodcast.getName()) && this.getId() == newPodcast.getId();
     }
   }
 
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO podcasts (name, genre, description) VALUES (:name, :genre, :description)";
+      this.id = (int) con.createQuery(sql, true)
+      .addParameter("name", this.name)
+      .addParameter("genre", this.genre)
+        .addParameter("description", this.description)
+        .executeUpdate()
+        .getKey();
+    }
+  }
 
-
+  public static Podcast find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM podcasts where id=:id";
+      Podcast podcast = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Podcast.class);
+      return podcast;
+    }
+  }
 
 
 }
