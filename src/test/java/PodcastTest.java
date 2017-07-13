@@ -100,4 +100,12 @@ public class PodcastTest {
     assertTrue(myPodcast.getReviews().containsAll(Arrays.asList(reviews)));
   }
 
+  @Test
+  public void delete_deletesPodcast_true() {
+    myPodcast.save();
+    int podcastId = myPodcast.getId();
+    myPodcast.delete();
+    assertEquals(null, Podcast.find(podcastId));
+  }
+
 }

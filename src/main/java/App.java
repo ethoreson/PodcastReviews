@@ -6,7 +6,7 @@ import static spark.Spark.*;
 
 public class App {
   public static void main(String[] args) {
-    staticFileLocation("/public");
+    staticFileLocation("../public");
     String layout = "templates/layout.vtl";
 
   get("/", (request, response) -> {
@@ -46,11 +46,43 @@ public class App {
     Review newReview = new Review(title, rating, description, podcastId);
     newReview.save();
     model.put("podcast", podcast);
-    model.put("template", "templates/podcast.vtl");
+    // model.put("template", "templates/podcast.vtl");
     String url = String.format("/%d", podcastId);
     response.redirect(url);
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
+
+  post("/:id/delete", (request, response) -> {
+    Map<String, Object> model = new HashMap<String, Object>();
+    Podcast podcast = Podcast.find(Integer.parseInt(request.params(":id")));
+    int podcastId = podcast.getId();
+    Review thisReview = Review.find(Integer.parseInt(request.queryParams("thisReview")));
+    thisReview.delete();
+    model.put("podcast", podcast);
+    String url = String.format("/%d", podcastId);
+    response.redirect(url);
+    return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/podcasts/:id/reviews/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Podcast podcast = Podcast.find(Integer.parseInt(request.params(":id")));
+      Task task = Task.find(Integer.parseInt(request.params(":id")));
+      model.put("category", category);
+      model.put("task", task);
+      model.put("template", "templates/task.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    // post("/delete", (request, response) -> {
+    //   Map<String, Object> model = new HashMap<String, Object>();
+    //   Podcast thisPodcast = Podcast.find(Integer.parseInt(request.queryParams("thisPodcast")));
+    //   thisPodcast.delete();
+    //   model.put("podcast", thisPodcast);
+    //   // String url = String.format("/%d", thisPodcast.getId());
+    //   // response.redirect(url);
+    //   return new ModelAndView(model, layout);
+    //   }, new VelocityTemplateEngine());
 
   }
 }

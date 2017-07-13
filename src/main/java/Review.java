@@ -79,14 +79,24 @@ public class Review {
     }
   }
 
-  // public List<Review> getReviews() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM reviews WHERE podcast_id=:id";
-  //     return con.createQuery(sql)
-  //       .addParameter("id", this.id)
-  //       .executeAndFetch(Review.class);
-  //   }
-  // }
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+    String sql = "DELETE FROM reviews WHERE id = :id;";
+    con.createQuery(sql)
+      .addParameter("id", id)
+      .executeUpdate();
+    }
+  }
+
+  public void update(String description) {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "UPDATE reviews SET description = :description WHERE id = :id";
+    con.createQuery(sql)
+      .addParameter("description", description)
+      .addParameter("id", id)
+      .executeUpdate();
+  }
+}
 
 
 }

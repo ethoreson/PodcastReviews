@@ -88,5 +88,20 @@ public class ReviewTest {
     secondReview.save();
     assertEquals(Review.find(secondReview.getId()), secondReview);
   }
+  //
+  // @Test
+  // public void delete_deletesReview_true() {
+  //   myReview.save();
+  //   int myReviewId = myReview.getId();
+  //   myReview.delete();
+  //   assertEquals(null, Review.find(myReviewId));
+  // }
+
+  @Test
+  public void update_updatesReviewDescription_true() {
+    myReview.save();
+    myReview.update("My mistake, this was bad");
+    assertEquals("My mistake, this was bad", Review.find(myReview.getId()).getDescription());
+  }
 
 }

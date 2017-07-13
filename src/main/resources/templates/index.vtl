@@ -19,12 +19,13 @@
     </select>
   <label for="description">Description</label>
   <input id="description" name="description" type="text">
+  <br>
   <button type="submit" class="btn btn-success">Add This Podcast</button>
 </form>
 
 <br>
+#if($podcasts.size() > 0)
 <h2>Existing Podcasts:</h2>
-#if($podcasts)
   <p>Click on a podcast to see its reviews:</p>
   <ul>
     #foreach ($podcast in $podcasts)
@@ -33,10 +34,17 @@
         $podcast.getGenre()
         <br>
         $podcast.getDescription()</a></li>
+        <!-- <form action="/" method="post">
+          <input value="$podcast.getId()" id="thisPodcast" name="thisPodcast" type="hidden" class="form-control">
+          <button type="submit" class="btn btn-danger" id="delete-podcast">Delete This Podcast</button>
+        </form> -->
+        <br>
+        <br>
     #end
   </ul>
 #else
-  <p>No podcasts yet!</p>
+  <h3>There are no podcasts to review yet.</h3>
+  <h3>Add one above.</h3>
 #end
 
 <!--index.vtl-->

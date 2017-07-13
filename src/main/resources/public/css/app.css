@@ -2,6 +2,10 @@ h1 {
   font-family: cursive;
   color: green;
 }
+
+body {
+  background-color: red;
+}
 /*
 h2 {
   background-color: #accaf9;

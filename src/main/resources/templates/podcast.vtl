@@ -27,6 +27,8 @@
   <button type="submit" class="btn btn-success">Publish Review</button>
 </form>
 
+  <a href="/">Back to All Podcasts</a>
+
 #if($reviews)
   <ul>
     #foreach ($review in $reviews)
@@ -35,6 +37,12 @@
         $review.getRating()
         <br>
         $review.getDescription()</li>
+        <form action="/$review.getPodcastId()/delete" method="post">
+          <input value="$review.getId()" id="thisReview" name="thisReview" type="hidden" class="form-control">
+          <button type="submit" class="btn btn-danger" id="delete-review">Delete this review</button>
+        </form>
+        <br>
+        <br>
     #end
   </ul>
 #else
